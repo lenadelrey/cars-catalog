@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "cars")
-public class CarModel {
+public class AdtModel {
 
     @Id
     @Column(name = "car_id")
@@ -26,7 +26,15 @@ public class CarModel {
     @JoinColumn(name = "user_id")
     private UserModel userModel;
 
-    public CarModel(Long car_id, String model, String description, float price, int year, UserModel userModel) {
+    public AdtModel(String model, String description, float price, int year, UserModel userModel) {
+        this.model = model;
+        this.description = description;
+        this.price = price;
+        this.year = year;
+        this.userModel = userModel;
+    }
+
+    public AdtModel(Long car_id, String model, String description, float price, int year, UserModel userModel) {
         this.car_id = car_id;
         this.model = model;
         this.description = description;
@@ -35,7 +43,7 @@ public class CarModel {
         this.userModel = userModel;
     }
 
-    public CarModel() {
+    public AdtModel() {
     }
 
     public Long getCar_id() {
@@ -88,7 +96,7 @@ public class CarModel {
 
     @Override
     public String toString() {
-        return "CarModel{" +
+        return "AdtModel{" +
                 "car_id=" + car_id +
                 ", model='" + model + '\'' +
                 ", description='" + description + '\'' +

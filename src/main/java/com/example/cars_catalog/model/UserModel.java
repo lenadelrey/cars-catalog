@@ -25,6 +25,13 @@ public class UserModel {
     @Column(name = "role")
     private Role role;
 
+    public UserModel(String name, String email, String password, Role role) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
     public UserModel(Long id, String name, String email, String password, Role role) {
         this.id = id;
         this.name = name;
