@@ -10,6 +10,8 @@ public interface UserService {
 
     UserModel read(Long id);
 
+    UserModel getByEmail(String email);
+
     List<UserModel> readAll();
 
     boolean update(UserModel userModel, Long id);

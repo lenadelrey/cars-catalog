@@ -2,7 +2,7 @@ package com.example.cars_catalog.service;
 
 import com.example.cars_catalog.model.AdtModel;
 
-import java.util.List;
+import java.util.stream.Stream;
 
 public interface AdtService {
 
@@ -10,7 +10,7 @@ public interface AdtService {
 
     AdtModel read(Long id);
 
-    List<AdtModel> readAll();
+    Stream<AdtModel> readAll(int limit, int offset);
 
     boolean update(AdtModel adtModel, Long id);
 

@@ -2,22 +2,21 @@ package com.example.cars_catalog.service;
 
 import com.example.cars_catalog.model.AdtModel;
 import com.example.cars_catalog.repository.AdtRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.stream.Stream;
 
 @Service
+@RequiredArgsConstructor
 public class DbAdtService implements AdtService {
 
     private final AdtRepository adtRepository;
 
-    public DbAdtService(AdtRepository adtRepository) {
-        this.adtRepository = adtRepository;
-    }
-
     @Override
     public void create(AdtModel adtModel) {
-        adtRepository.save(adtModel);
+        adtRepository.save(new AdtModel(adtModel.getModel(), adtModel.getDescription(),
+                adtModel.getPrice(), adtModel.getYear(), adtModel.getUserModel()));
     }
 
     @Override
@@ -26,8 +25,8 @@ public class DbAdtService implements AdtService {
     }
 
     @Override
-    public List<AdtModel> readAll() {
-        return adtRepository.findAll();
+    public Stream<AdtModel> readAll(int limit, int offset) {
+        return adtRepository.findAll().stream().limit(limit).skip(offset);
     }
 
     @Override
