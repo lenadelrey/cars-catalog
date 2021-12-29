@@ -1,21 +1,18 @@
 package com.example.cars_catalog.controller.admin;
 
-import com.example.cars_catalog.model.Role;
 import com.example.cars_catalog.model.UserModel;
 import com.example.cars_catalog.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequestMapping("/admin")
+@RequiredArgsConstructor
 public class AdminUserAccController {
 
     private final UserService userService;
-
-
-    public AdminUserAccController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping(value = "/users/readAll")
     public String readAll(Model model) {
@@ -32,8 +29,7 @@ public class AdminUserAccController {
     @PostMapping(value = "/users/updateAccount/{id}")
     public String updateAccount(@ModelAttribute(value = "user") UserModel userModel, @PathVariable(value = "id") Long id, Model model) {
         model.addAttribute("user", userModel);
-        userService.update(new UserModel(id, userModel.getName(), userModel.getEmail(),
-                userModel.getPassword(), Role.USER), id);
+        userService.update(userModel, id);
         return "updateAccount";
     }
 

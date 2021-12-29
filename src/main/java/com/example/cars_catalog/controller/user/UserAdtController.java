@@ -1,20 +1,31 @@
 package com.example.cars_catalog.controller.user;
 
 import com.example.cars_catalog.model.AdtModel;
-import com.example.cars_catalog.model.Role;
-import com.example.cars_catalog.model.UserModel;
 import com.example.cars_catalog.service.AdtService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("home/adt")
+
+@Controller
+@RequestMapping("/user/adt")
+@RequiredArgsConstructor
 public class UserAdtController {
 
     private final AdtService adtService;
 
-    public UserAdtController(AdtService adtService) {
-        this.adtService = adtService;
+    @GetMapping(value = "/createAdt")
+    public String create(Model model) {
+        model.addAttribute("adt", new AdtModel());
+        return "createAdt";
+    }
+
+    @PostMapping(value = "/createAdt")
+    public String create(@ModelAttribute(value = "adtModel") AdtModel adtModel, Model model) {
+        model.addAttribute("adtModel", adtModel);
+        adtService.create(adtModel);
+        return "redirect:/home/readAdt/" + adtModel.getCar_id();
     }
 
     @GetMapping(value = "/readAdt/{id}")
@@ -32,8 +43,7 @@ public class UserAdtController {
     @PostMapping(value = "/updateAdt/{id}")
     public String updateAdt(@ModelAttribute(value = "user") AdtModel adtModel, @PathVariable(value = "id") Long id, Model model) {
         model.addAttribute("adtModel", adtModel);
-        adtService.update(new AdtModel(id, adtModel.getModel(), adtModel.getDescription(),
-                adtModel.getPrice(), adtModel.getYear(), adtModel.getUserModel()), id);
+        adtService.update(adtModel, id);
         return "userUpdateAdt";
     }
 
