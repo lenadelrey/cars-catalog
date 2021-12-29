@@ -1,16 +1,21 @@
 package com.example.cars_catalog.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class UserModel {
 
     @Id
     @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
@@ -22,75 +27,16 @@ public class UserModel {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "role")
-    private Role role;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Role.class)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
-    public UserModel(String name, String email, String password, Role role) {
+    public UserModel(String name, String email, String password, Set<Role> roles) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.role = role;
-    }
-
-    public UserModel(Long id, String name, String email, String password, Role role) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
-
-    public UserModel() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    @Override
-    public String toString() {
-        return "UserModel{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", role=" + role +
-                '}';
+        this.roles = roles;
     }
 }

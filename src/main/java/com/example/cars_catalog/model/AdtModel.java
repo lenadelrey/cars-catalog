@@ -1,9 +1,18 @@
 package com.example.cars_catalog.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "cars")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class AdtModel {
 
     @Id
@@ -34,75 +43,4 @@ public class AdtModel {
         this.userModel = userModel;
     }
 
-    public AdtModel(Long car_id, String model, String description, float price, int year, UserModel userModel) {
-        this.car_id = car_id;
-        this.model = model;
-        this.description = description;
-        this.price = price;
-        this.year = year;
-        this.userModel = userModel;
-    }
-
-    public AdtModel() {
-    }
-
-    public Long getCar_id() {
-        return car_id;
-    }
-
-    public void setCar_id(Long car_id) {
-        this.car_id = car_id;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public UserModel getUserModel() {
-        return userModel;
-    }
-
-    public void setUserModel(UserModel userModel) {
-        this.userModel = userModel;
-    }
-
-    @Override
-    public String toString() {
-        return "AdtModel{" +
-                "car_id=" + car_id +
-                ", model='" + model + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", year=" + year +
-                ", userModel=" + userModel +
-                '}';
-    }
 }
