@@ -1,6 +1,6 @@
 package com.example.cars_catalog.config.security;
 
-import com.example.cars_catalog.model.UserModel;
+import com.example.cars_catalog.model.User;
 import com.example.cars_catalog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,11 +16,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        UserModel userModel = userRepository.getUserModelByEmail(email);
-        if (userModel == null) {
+        User user = userRepository.getUserModelByEmail(email);
+        if (user == null) {
             throw new UsernameNotFoundException("Could not find user");
         }
 
-        return new CustomUserDetails(userModel);
+        return new CustomUserDetails(user);
     }
 }

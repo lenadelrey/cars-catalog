@@ -18,6 +18,13 @@ public class HomeController {
     private final AdtService adtService;
 
     @GetMapping
+    public String readAll(Model model) {
+        model.addAttribute("adt", adtService.readAll());
+        model.addAttribute("user", null);
+        return "home";
+    }
+
+    @GetMapping("/{limit}&{offset}")
     public String readAll(@PathParam(value = "limit") int limit, @PathParam(value = "offset") int offset, Model model) {
         model.addAttribute("adt", adtService.readAll(limit, offset));
         model.addAttribute("user", null);

@@ -1,9 +1,11 @@
 package com.example.cars_catalog.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -11,7 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
-public class UserModel {
+public class User {
 
     @Id
     @Column(name = "user_id")
@@ -27,16 +29,16 @@ public class UserModel {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Role.class)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Role.class)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private Role role;
 
-    public UserModel(String name, String email, String password, Set<Role> roles) {
+    public User(String name, String email, String password, Role role) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.roles = roles;
+        this.role = role;
     }
 }

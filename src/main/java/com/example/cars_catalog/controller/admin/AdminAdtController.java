@@ -1,6 +1,6 @@
 package com.example.cars_catalog.controller.admin;
 
-import com.example.cars_catalog.model.AdtModel;
+import com.example.cars_catalog.model.Adt;
 import com.example.cars_catalog.service.AdtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -27,10 +27,10 @@ public class AdminAdtController {
     }
 
     @PostMapping(value = "/updateAdt/{id}")
-    public String updateAdt(@ModelAttribute(value = "user") AdtModel adtModel, @PathVariable(value = "id") Long id, Model model) {
-        model.addAttribute("adtModel", adtModel);
-        adtService.update(new AdtModel(id, adtModel.getModel(), adtModel.getDescription(),
-                adtModel.getPrice(), adtModel.getYear(), adtModel.getUserModel()), id);
+    public String updateAdt(@ModelAttribute(value = "user") Adt adt, @PathVariable(value = "id") Long id, Model model) {
+        model.addAttribute("adtModel", adt);
+        adtService.update(new Adt(id, adt.getModel(), adt.getDescription(),
+                adt.getPrice(), adt.getYear(), adt.getUser()), id);
         return "userUpdateAdt";
     }
 

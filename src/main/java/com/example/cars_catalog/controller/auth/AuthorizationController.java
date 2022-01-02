@@ -1,7 +1,7 @@
 package com.example.cars_catalog.controller.auth;
 
 
-import com.example.cars_catalog.model.UserModel;
+import com.example.cars_catalog.model.User;
 import com.example.cars_catalog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,13 +19,13 @@ public class AuthorizationController {
 
     @GetMapping
     public String showAuthForm(Model model) {
-        model.addAttribute("userModel", new UserModel());
+        model.addAttribute("userModel", new User());
         return "authorization";
     }
 
     @PostMapping
     public String authorization(@PathParam(value = "email") String email, @PathParam(value = "password") String password, Model model) {
-        UserModel byEmail = userService.getByEmail(email);
+        User byEmail = userService.getByEmail(email);
         if (byEmail.getPassword().equals(password)) {
             return "redirect:/home";
         }

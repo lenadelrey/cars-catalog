@@ -1,10 +1,11 @@
 package com.example.cars_catalog.service;
 
-import com.example.cars_catalog.model.AdtModel;
+import com.example.cars_catalog.model.Adt;
 import com.example.cars_catalog.repository.AdtRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @Service
@@ -14,26 +15,31 @@ public class DbAdtService implements AdtService {
     private final AdtRepository adtRepository;
 
     @Override
-    public void create(AdtModel adtModel) {
-        adtRepository.save(new AdtModel(adtModel.getModel(), adtModel.getDescription(),
-                adtModel.getPrice(), adtModel.getYear(), adtModel.getUserModel()));
+    public void create(Adt adt) {
+        adtRepository.save(new Adt(adt.getModel(), adt.getDescription(),
+                adt.getPrice(), adt.getYear(), adt.getUser()));
     }
 
     @Override
-    public AdtModel read(Long id) {
+    public Adt read(Long id) {
         return adtRepository.getById(id);
     }
 
     @Override
-    public Stream<AdtModel> readAll(int limit, int offset) {
+    public Stream<Adt> readAll(int limit, int offset) {
         return adtRepository.findAll().stream().limit(limit).skip(offset);
     }
 
     @Override
-    public boolean update(AdtModel adtModel, Long id) {
+    public List<Adt> readAll() {
+        return adtRepository.findAll();
+    }
+
+    @Override
+    public boolean update(Adt adt, Long id) {
         if (adtRepository.existsById(id)) {
-            adtModel.setCar_id(id);
-            adtRepository.save(adtModel);
+            adt.setCar_id(id);
+            adtRepository.save(adt);
             return true;
         }
         return false;

@@ -13,7 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class AdtModel {
+public class Adt {
 
     @Id
     @Column(name = "car_id")
@@ -33,14 +33,14 @@ public class AdtModel {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserModel userModel;
+    private User user;
 
-    public AdtModel(String model, String description, float price, int year, UserModel userModel) {
+    public Adt(String model, String description, float price, int year, User user) {
         this.model = model;
         this.description = description;
         this.price = price;
         this.year = year;
-        this.userModel = userModel;
+        this.user = user;
     }
 
 }

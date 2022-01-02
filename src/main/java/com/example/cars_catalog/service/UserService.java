@@ -1,20 +1,18 @@
 package com.example.cars_catalog.service;
 
-import com.example.cars_catalog.model.UserModel;
+import com.example.cars_catalog.model.User;
 
 import java.util.List;
 
 public interface UserService {
 
-    void create(UserModel userModel);
+    User read(Long id);
 
-    UserModel read(Long id);
+    User getByEmail(String email);
 
-    UserModel getByEmail(String email);
+    List<User> readAll();
 
-    List<UserModel> readAll();
-
-    boolean update(UserModel userModel, Long id);
+    boolean update(User user, Long id);
 
     boolean delete(Long id);
 

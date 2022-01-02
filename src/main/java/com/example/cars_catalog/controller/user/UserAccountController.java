@@ -1,6 +1,6 @@
 package com.example.cars_catalog.controller.user;
 
-import com.example.cars_catalog.model.UserModel;
+import com.example.cars_catalog.model.User;
 import com.example.cars_catalog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -27,9 +27,9 @@ public class UserAccountController {
     }
 
     @PostMapping(value = "/updateAccount/{id}")
-    public String updateAccount(@ModelAttribute(value = "user") UserModel userModel, @PathVariable(value = "id") Long id, Model model) {
-        model.addAttribute("user", userModel);
-        userService.update(userModel, id);
+    public String updateAccount(@ModelAttribute(value = "user") User user, @PathVariable(value = "id") Long id, Model model) {
+        model.addAttribute("user", user);
+        userService.update(user, id);
         return "userUpdateAccount";
     }
 

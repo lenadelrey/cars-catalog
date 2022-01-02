@@ -1,6 +1,6 @@
 package com.example.cars_catalog.controller.user;
 
-import com.example.cars_catalog.model.AdtModel;
+import com.example.cars_catalog.model.Adt;
 import com.example.cars_catalog.service.AdtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,15 +17,15 @@ public class UserAdtController {
 
     @GetMapping(value = "/createAdt")
     public String create(Model model) {
-        model.addAttribute("adt", new AdtModel());
+        model.addAttribute("adt", new Adt());
         return "createAdt";
     }
 
     @PostMapping(value = "/createAdt")
-    public String create(@ModelAttribute(value = "adtModel") AdtModel adtModel, Model model) {
-        model.addAttribute("adtModel", adtModel);
-        adtService.create(adtModel);
-        return "redirect:/home/readAdt/" + adtModel.getCar_id();
+    public String create(@ModelAttribute(value = "adtModel") Adt adt, Model model) {
+        model.addAttribute("adtModel", adt);
+        adtService.create(adt);
+        return "redirect:/home/readAdt/" + adt.getCar_id();
     }
 
     @GetMapping(value = "/readAdt/{id}")
@@ -41,9 +41,9 @@ public class UserAdtController {
     }
 
     @PostMapping(value = "/updateAdt/{id}")
-    public String updateAdt(@ModelAttribute(value = "user") AdtModel adtModel, @PathVariable(value = "id") Long id, Model model) {
-        model.addAttribute("adtModel", adtModel);
-        adtService.update(adtModel, id);
+    public String updateAdt(@ModelAttribute(value = "user") Adt adt, @PathVariable(value = "id") Long id, Model model) {
+        model.addAttribute("adtModel", adt);
+        adtService.update(adt, id);
         return "userUpdateAdt";
     }
 
