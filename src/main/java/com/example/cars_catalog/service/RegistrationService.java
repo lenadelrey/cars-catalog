@@ -1,9 +1,10 @@
 package com.example.cars_catalog.service;
 
-import com.example.cars_catalog.model.User;
+import com.example.cars_catalog.controller.dto.user.signup.request.SignUpRequestDto;
+import com.example.cars_catalog.controller.dto.user.signup.response.SignUpResponseDto;
 
 public interface RegistrationService {
 
-    User create(User user);
+    SignUpResponseDto create(SignUpRequestDto signUpRequestDto);
 
 }

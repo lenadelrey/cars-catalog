@@ -1,19 +1,26 @@
 package com.example.cars_catalog.service;
 
+import com.example.cars_catalog.controller.dto.user.get.response.GetUserResponseDto;
+import com.example.cars_catalog.controller.dto.user.update.request.UpdateUserRequestDto;
+import com.example.cars_catalog.controller.dto.user.update.response.UpdateUserResponseDto;
 import com.example.cars_catalog.model.User;
 
 import java.util.List;
 
 public interface UserService {
 
-    User read(Long id);
+    GetUserResponseDto read(String email);
 
     User getByEmail(String email);
 
     List<User> readAll();
 
-    boolean update(User user, Long id);
+    UpdateUserResponseDto update(UpdateUserRequestDto updateUserRequestDto, String email);
 
-    boolean delete(Long id);
+    boolean delete(String email);
+
+    UpdateUserResponseDto updateById(UpdateUserRequestDto updateUserRequestDto, long id);
+
+    boolean deleteById(long id);
 
 }

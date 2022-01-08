@@ -1,22 +1,32 @@
 package com.example.cars_catalog.service;
 
+import com.example.cars_catalog.controller.dto.adt.create.request.CreateAdtRequestDto;
+import com.example.cars_catalog.controller.dto.adt.create.response.CreateAdtResponseDto;
+import com.example.cars_catalog.controller.dto.adt.get.response.GetAdtResponseDto;
+import com.example.cars_catalog.controller.dto.adt.update.request.UpdateAdtRequestDto;
+import com.example.cars_catalog.controller.dto.adt.update.response.UpdateAdtResponseDto;
 import com.example.cars_catalog.model.Adt;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 public interface AdtService {
 
-    void create(Adt adt);
+    CreateAdtResponseDto create(CreateAdtRequestDto createAdtRequestDto);
 
-    Adt read(Long id);
+    GetAdtResponseDto read(long id);
 
-    Stream<Adt> readAll(int limit, int offset);
+    Page<GetAdtResponseDto> readAll(Pageable pageable);
 
-    List<Adt> readAll();
+    UpdateAdtResponseDto update(UpdateAdtRequestDto updateAdtRequestDto, long id);
 
-    boolean update(Adt adt, Long id);
+    boolean delete(long id);
 
-    boolean delete(Long id);
+    Page<GetAdtResponseDto> findAllByModelAndYear(String model, int year, Pageable pageable);
+
+    Page<GetAdtResponseDto> findAllByPrice(float price, Pageable pageable);
+
+    List<GetAdtResponseDto> findAllWithSortByPrice();
 
 }
