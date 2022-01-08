@@ -1,43 +1,40 @@
 package com.example.cars_catalog.controller.admin;
 
-import com.example.cars_catalog.model.Adt;
+import com.example.cars_catalog.controller.dto.adt.get.response.GetAdtResponseDto;
+import com.example.cars_catalog.controller.dto.adt.update.request.UpdateAdtRequestDto;
+import com.example.cars_catalog.controller.dto.adt.update.response.UpdateAdtResponseDto;
 import com.example.cars_catalog.service.AdtService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-@RequestMapping("/admin")
+import javax.validation.Valid;
+
+@RestController
+@RequestMapping("/admin/adt")
 @RequiredArgsConstructor
 public class AdminAdtController {
 
     private final AdtService adtService;
 
-    @GetMapping(value = "/readAdt/{id}")
-    public String readAdt(@PathVariable(value = "id") Long id, Model model) {
-        model.addAttribute("adt", adtService.read(id));
-        return "readAdt";
+    @GetMapping(value = "/{id}")
+    public GetAdtResponseDto read(@PathVariable long id) {
+        return adtService.read(id);
     }
 
-    @GetMapping(value = "/updateAdt/{id}")
-    public String updateAdt(@PathVariable(value = "id") Long id, Model model) {
-        model.addAttribute("user", adtService.read(id));
-        return "userUpdateAdt";
+    @PutMapping(value = "/{id}")
+    public UpdateAdtResponseDto update(@Valid @RequestBody UpdateAdtRequestDto updateAdtRequestDto, @PathVariable long id) {
+        return adtService.update(updateAdtRequestDto, id);
     }
 
-    @PostMapping(value = "/updateAdt/{id}")
-    public String updateAdt(@ModelAttribute(value = "user") Adt adt, @PathVariable(value = "id") Long id, Model model) {
-        model.addAttribute("adtModel", adt);
-        adtService.update(new Adt(id, adt.getModel(), adt.getDescription(),
-                adt.getPrice(), adt.getYear(), adt.getUser()), id);
-        return "userUpdateAdt";
-    }
-
-    @RequestMapping(method = {RequestMethod.DELETE, RequestMethod.POST}, value = "/deleteAdt/{id}")
-    public String delete(@PathVariable("id") Long id) {
-        adtService.delete(id);
-        return "redirect:/home";
+    @DeleteMapping(value = "/{id}")
+    public boolean delete(@PathVariable long id) {
+        return adtService.delete(id);
     }
 
 }

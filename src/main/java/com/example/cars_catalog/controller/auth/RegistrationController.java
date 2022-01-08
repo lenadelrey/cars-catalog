@@ -1,12 +1,17 @@
 package com.example.cars_catalog.controller.auth;
 
-import com.example.cars_catalog.model.User;
+import com.example.cars_catalog.controller.dto.user.signup.request.SignUpRequestDto;
+import com.example.cars_catalog.controller.dto.user.signup.response.SignUpResponseDto;
 import com.example.cars_catalog.service.RegistrationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import javax.validation.Valid;
+
+@RestController
 @RequestMapping("/registration")
 @RequiredArgsConstructor
 public class RegistrationController {
@@ -14,21 +19,8 @@ public class RegistrationController {
     private final RegistrationService registrationService;
 
     @PostMapping
-    public User registration(@RequestBody User user) {
-        return registrationService.create(user);
+    public SignUpResponseDto register(@Valid @RequestBody SignUpRequestDto signUpRequestDto) {
+        return registrationService.create(signUpRequestDto);
     }
-
-//    @GetMapping
-//    public String showRegistrationForm(Model model) {
-//        model.addAttribute("userModel", new UserModel());
-//        return "registration";
-//    }
-//
-//    @PostMapping
-//    public String registration(@ModelAttribute(name = "userModel") UserModel userModel, Model model) {
-//        model.addAttribute("userModel", userModel);
-//        registrationService.create(userModel);
-//        return "redirect:/home";
-//    }
 
 }

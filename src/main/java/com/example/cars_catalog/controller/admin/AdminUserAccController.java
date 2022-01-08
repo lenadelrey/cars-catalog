@@ -1,42 +1,41 @@
 package com.example.cars_catalog.controller.admin;
 
+import com.example.cars_catalog.controller.dto.user.update.request.UpdateUserRequestDto;
+import com.example.cars_catalog.controller.dto.user.update.response.UpdateUserResponseDto;
 import com.example.cars_catalog.model.User;
 import com.example.cars_catalog.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-@RequestMapping("/admin")
+import javax.validation.Valid;
+import java.util.List;
+
+@RestController
+@RequestMapping("/admin/user")
 @RequiredArgsConstructor
 public class AdminUserAccController {
 
     private final UserService userService;
 
-    @GetMapping(value = "/users/readAll")
-    public String readAll(Model model) {
-        model.addAttribute("users", userService.readAll());
-        return "readAllUsers";
+    @GetMapping
+    public List<User> readAll() {
+        return userService.readAll();
     }
 
-    @GetMapping(value = "/users/updateAccount/{id}")
-    public String updateAccount(@PathVariable(value = "id") Long id, Model model) {
-        model.addAttribute("user", userService.read(id));
-        return "updateAccount";
+    @PutMapping(value = "/{id}")
+    public UpdateUserResponseDto update(@Valid @RequestBody UpdateUserRequestDto updateUserRequestDto, @PathVariable long id) {
+        return userService.updateById(updateUserRequestDto, id);
     }
 
-    @PostMapping(value = "/users/updateAccount/{id}")
-    public String updateAccount(@ModelAttribute(value = "user") User user, @PathVariable(value = "id") Long id, Model model) {
-        model.addAttribute("user", user);
-        userService.update(user, id);
-        return "updateAccount";
-    }
-
-    @RequestMapping(method = {RequestMethod.DELETE, RequestMethod.POST}, value = "/users/deleteAccount/{id}")
-    public String delete(@PathVariable("id") Long id) {
-        userService.delete(id);
-        return "redirect:/readAllUsers";
+    @DeleteMapping(value = "/{id}")
+    public boolean delete(@PathVariable long id) {
+        return userService.deleteById(id);
     }
 
 }

@@ -1,36 +1,27 @@
 package com.example.cars_catalog.controller.auth;
 
 
-import com.example.cars_catalog.model.User;
-import com.example.cars_catalog.service.UserService;
+import com.example.cars_catalog.controller.dto.user.signin.request.SignInRequestDto;
+import com.example.cars_catalog.controller.dto.user.signin.response.SignInResponseDto;
+import com.example.cars_catalog.service.AuthorizationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.websocket.server.PathParam;
+import javax.validation.Valid;
 
-@Controller
-@RequestMapping("/authorization")
+@RestController
+@RequestMapping(path = "/authorization")
 @RequiredArgsConstructor
 public class AuthorizationController {
 
-    private final UserService userService;
-
-    @GetMapping
-    public String showAuthForm(Model model) {
-        model.addAttribute("userModel", new User());
-        return "authorization";
-    }
+    private final AuthorizationService authorizationService;
 
     @PostMapping
-    public String authorization(@PathParam(value = "email") String email, @PathParam(value = "password") String password, Model model) {
-        User byEmail = userService.getByEmail(email);
-        if (byEmail.getPassword().equals(password)) {
-            return "redirect:/home";
-        }
-        model.addAttribute("message", "Password is incorrect");
-        return "authorization";
+    public SignInResponseDto authorize(@Valid @RequestBody SignInRequestDto signInRequestDto) {
+        return authorizationService.authorization(signInRequestDto);
     }
 
 }
