@@ -1,4 +1,4 @@
-package com.example.cars_catalog.config.security;
+package com.example.cars_catalog.service.security;
 
 import com.example.cars_catalog.model.Role;
 import com.example.cars_catalog.model.User;
@@ -32,7 +32,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getName();
+        return user.getEmail();
     }
 
     @Override
