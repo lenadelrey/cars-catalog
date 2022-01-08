@@ -5,7 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "cars")
@@ -16,8 +23,9 @@ import javax.persistence.*;
 public class Adt {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "car_id")
-    private Long car_id;
+    private Long carId;
 
     @Column(name = "model")
     private String model;
@@ -31,16 +39,11 @@ public class Adt {
     @Column(name = "year")
     private int year;
 
+    @Column(name = "deleted", nullable = false)
+    private Boolean deleted = false;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    public Adt(String model, String description, float price, int year, User user) {
-        this.model = model;
-        this.description = description;
-        this.price = price;
-        this.year = year;
-        this.user = user;
-    }
 
 }

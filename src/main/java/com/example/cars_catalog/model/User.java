@@ -5,7 +5,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -29,11 +41,12 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Role.class)
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
     private Role role;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Adt> adts;
 
     public User(String name, String email, String password, Role role) {
         this.name = name;

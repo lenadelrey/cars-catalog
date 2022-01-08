@@ -1,8 +1,8 @@
 package com.example.cars_catalog.exception;
 
 public class IsExistException extends RuntimeException {
-    private String value;
-    private String method;
+    private final String value;
+    private final String method;
 
 
     public IsExistException(String value, String method) {
